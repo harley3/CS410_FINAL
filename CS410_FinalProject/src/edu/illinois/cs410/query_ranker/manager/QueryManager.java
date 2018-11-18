@@ -49,7 +49,7 @@ public class QueryManager {
 		
 	// load SportsArticles using java NLP library of choice
 		//Input folder
-        String docsPath = "input/SportsArticles";
+        String docsPath = "input";
          
         //Output folder
         String indexPath = "indexedFiles";

@@ -34,7 +34,7 @@ public class QueryRankerUI {
     	if (args.length == 1) {
     		queryString= args[0];
     	} else {
-        	queryString = "score";
+        	queryString = "Britain";
     	}
     	
     	queryManager = new QueryManager(queryString);
