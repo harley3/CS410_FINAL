@@ -92,10 +92,9 @@ public class SportsQueryManager {
         for (ScoreDoc sd : foundDocs.scoreDocs)
         {
             Document d = searcher.doc(sd.doc);
-            //System.out.println("FileName : "+ d.get("path") + ", Score : " + sd.score);
-            System.out.println(d.get("path"));
-            ///System.out.print(d.get("path").substring(d.get("path").length() - 8, d.get("path").length() - 4) + ",");
             
+            System.out.println(d.get("path"));
+              
         }
 	}
 	

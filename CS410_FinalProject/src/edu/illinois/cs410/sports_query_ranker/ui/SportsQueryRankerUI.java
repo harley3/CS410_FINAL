@@ -30,17 +30,12 @@ public class SportsQueryRankerUI {
     public static void main(String[] args) throws Exception {
     	
     	// SportsQueryManager(articleFilePrefix, pathName)
-    	String articleFilePrefix = "";
-    	String pathName = "";
+  
     	String queryString = "";
     	
-    	if (args.length == 3) {
-    		articleFilePrefix = args[0];
-    		pathName = args[1];
-    		queryString= args[2];
+    	if (args.length == 1) {
+    		queryString= args[0];
     	} else {
-    		articleFilePrefix = "";
-        	pathName = "";
         	queryString = "score";
     	}
     	
