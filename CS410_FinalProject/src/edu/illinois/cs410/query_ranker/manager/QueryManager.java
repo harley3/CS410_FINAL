@@ -158,7 +158,7 @@ public class QueryManager {
         Query query = qp.parse(textToFind);
          
         //search the index
-        TopDocs hits = searcher.search(query, 20);
+        TopDocs hits = searcher.search(query, 10);
         return hits;
     }
  
