@@ -1,6 +1,6 @@
 <?php
 $querySTR = $_POST['query'];
-exec("java -jar SportsQueryManager.jar " . $querySTR . " 2>&1", $output);
+exec("java -jar QueryManager.jar " . $querySTR . " 2>&1", $output);
 ?>
 <CENTER><H1>Search Results for: <?php echo $querySTR; ?></H1></CENTER>
 

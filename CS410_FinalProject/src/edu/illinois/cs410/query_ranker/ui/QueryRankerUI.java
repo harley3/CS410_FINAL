@@ -1,22 +1,22 @@
 /**
  * 
  */
-package edu.illinois.cs410.sports_query_ranker.ui;
+package edu.illinois.cs410.query_ranker.ui;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 
-import edu.illinois.cs410.sports_query_ranker.manager.SportsQueryManager;
+import edu.illinois.cs410.query_ranker.manager.QueryManager;
 
 
 /**
  * @author conradharley
  *
  */
-public class SportsQueryRankerUI {
+public class QueryRankerUI {
 	/** Query Manager */
-	public static SportsQueryManager queryManager = null;
+	public static QueryManager queryManager = null;
 	
 	/** console input */
 	public static Scanner console = null;
@@ -29,8 +29,6 @@ public class SportsQueryRankerUI {
      */
     public static void main(String[] args) throws Exception {
     	
-    	// SportsQueryManager(articleFilePrefix, pathName)
-  
     	String queryString = "";
     	
     	if (args.length == 1) {
@@ -39,7 +37,7 @@ public class SportsQueryRankerUI {
         	queryString = "score";
     	}
     	
-    	queryManager = new SportsQueryManager(queryString);
+    	queryManager = new QueryManager(queryString);
     	System.exit(1);
      }
 }

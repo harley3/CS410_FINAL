@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.illinois.cs410.sports_query_ranker.manager;
+package edu.illinois.cs410.query_ranker.manager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,12 +39,12 @@ import org.apache.lucene.search.similarities.BM25Similarity;
  * @author conradharley
  *
  */
-public class SportsQueryManager {
+public class QueryManager {
 	/**
-	 * Constructs a new SportsQueryManager
+	 * Constructs a new QueryManager
 	 * @throws Exception 
 	 */
-	public SportsQueryManager(String queryString) throws Exception
+	public QueryManager(String queryString) throws Exception
 	{
 		
 	// load SportsArticles using java NLP library of choice
