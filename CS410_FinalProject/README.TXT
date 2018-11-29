@@ -5,7 +5,7 @@ queryForm.php
 viewDoc.php
 QueryManager.jar
 
-Copy the following Document Collection folder to server:
+Copy the following Document Collection folder to the same folder as the above files:
 
 ./input
 
