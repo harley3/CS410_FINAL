@@ -9,9 +9,32 @@ Copy the following Document Collection folder to the same folder as the above fi
 
 ./input
 
-RUN COMMAND-LINE TEST(query keyword: Britain):
+RUN COMMAND-LINE TEST(query keyword: Presidential Election):
 
-java -jar QueryManager.jar Britain
+java -jar QueryManager.jar 'Presidential Election'
+
+EXPECTED RESULTS(Ranking function should produce a similar result + or - slight ranking differences):
+
+Text Document: input/bbc/politics/249.txt
+
+Text Document: input/bbc/politics/267.txt
+
+Text Document: input/bbc/tech/001.txt
+
+Text Document: input/bbc/politics/194.txt
+
+Text Document: input/bbc/business/007.txt
+
+Text Document: input/bbc/business/253.txt
+
+Text Document: input/bbc/politics/189.txt
+
+Text Document: input/bbc/business/294.txt
+
+Text Document: input/bbc/politics/149.txt
+
+Text Document: input/bbc/tech/157.txt
+
 
 ### Software Implementation ###
 The provided software uses an Eclipse project which encompasses 2 java files: QueryManager.java and QueryRankerUI.java.
