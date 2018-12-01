@@ -13,7 +13,7 @@ RUN COMMAND-LINE TEST(query keyword: Presidential Election):
 
 java -jar QueryManager.jar 'Presidential Election'
 
-EXPECTED RESULTS(Ranking function should produce a similar result + or - slight ranking differences on each run):
+EXPECTED WEB SERVER RESULTS(PHP Ranking results should produce a similar result + or - slight ranking differences on each run):
 
 
 
