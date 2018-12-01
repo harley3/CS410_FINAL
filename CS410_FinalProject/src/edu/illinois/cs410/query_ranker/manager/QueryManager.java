@@ -3,8 +3,11 @@
  */
 package edu.illinois.cs410.query_ranker.manager;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,6 +37,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.similarities.BM25Similarity;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.search.similarities.LMDirichletSimilarity;
 
 /**
  * @author conradharley
@@ -56,7 +61,10 @@ public class QueryManager {
  
         //Input Path Variable
         final Path docDir = Paths.get(docsPath);
- 
+        
+        String[][] outputRanking = new String[10][9];
+        BufferedReader firstLineReader;
+        String docTitle;
         try
         {
             //org.apache.lucene.store.Directory instance
@@ -84,18 +92,77 @@ public class QueryManager {
 
         IndexSearcher searcher = createSearcher(indexPath);
        
+        // BM25 Similarity
         searcher.setSimilarity(new BM25Similarity());
         
         TopDocs foundDocs = searchInContent(queryString, searcher);
         
-        //Let's print out the path of files which have searched term
+        //Saves BM25Similarity to array 
+        int i = 0;
+        for (ScoreDoc sd : foundDocs.scoreDocs)
+        {
+        	
+            Document d = searcher.doc(sd.doc);
+            firstLineReader = new BufferedReader(new FileReader(d.get("path")));
+            docTitle = firstLineReader.readLine();
+            
+            outputRanking[i][0] = d.get("path");
+            outputRanking[i][1] = "" + sd.score + "";
+            outputRanking[i][2] = docTitle;
+            i++;
+            //System.out.println(d.get("path"));
+              
+        }
+     // LMDirichletSimilarity
+        searcher.setSimilarity(new LMDirichletSimilarity());
+        
+        foundDocs = searchInContent(queryString, searcher);
+        
+        //Saves ClassicSimilarity to array 
+        i = 0;
         for (ScoreDoc sd : foundDocs.scoreDocs)
         {
             Document d = searcher.doc(sd.doc);
             
-            System.out.println(d.get("path"));
+            firstLineReader = new BufferedReader(new FileReader(d.get("path")));
+            docTitle = firstLineReader.readLine();
+            outputRanking[i][3] = d.get("path");
+            outputRanking[i][4] = "" + sd.score + "";
+            outputRanking[i][5] = docTitle;
+            i++;
+            //System.out.println(d.get("path"));   
+        }
+        
+        // ClassicSimilarity
+        searcher.setSimilarity(new ClassicSimilarity());
+        
+        foundDocs = searchInContent(queryString, searcher);
+        
+        //Saves ClassicSimilarity to array 
+        i = 0;
+        for (ScoreDoc sd : foundDocs.scoreDocs)
+        {
+            Document d = searcher.doc(sd.doc);
+            
+            firstLineReader = new BufferedReader(new FileReader(d.get("path")));
+            docTitle = firstLineReader.readLine();
+            outputRanking[i][6] = d.get("path");
+            outputRanking[i][7] = "" + sd.score + "";
+            outputRanking[i][8] = docTitle;
+            i++;
+            //System.out.println(d.get("path"));
               
         }
+        
+        
+        for (int j = 0; j < outputRanking.length; j++)
+        {
+        	System.out.print(outputRanking[j][0] + " ___ " + outputRanking[j][1] + " ___ " + outputRanking[j][2] + " ___ ");
+        	System.out.print(outputRanking[j][3] + " ___ " + outputRanking[j][4] + " ___ " + outputRanking[j][5] + " ___ ");
+        	System.out.println(outputRanking[j][6] + " ___ " + outputRanking[j][7] + " ___ " + outputRanking[j][8]);
+        
+        }
+        
 	}
 	
 	public void loadDocuments() {
