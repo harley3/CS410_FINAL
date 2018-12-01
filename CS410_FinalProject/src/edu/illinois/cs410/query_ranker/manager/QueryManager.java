@@ -20,6 +20,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
@@ -30,6 +31,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -58,7 +60,10 @@ public class QueryManager {
          
         //Output folder
         String indexPath = "indexedFiles";
+        Directory indexPath1 = FSDirectory.open(Paths.get(indexPath));
  
+        IndexReader reader = DirectoryReader.open(indexPath1);
+        
         //Input Path Variable
         final Path docDir = Paths.get(docsPath);
         
@@ -110,7 +115,6 @@ public class QueryManager {
             outputRanking[i][1] = "" + sd.score + "";
             outputRanking[i][2] = docTitle;
             i++;
-            //System.out.println(d.get("path"));
               
         }
      // LMDirichletSimilarity
@@ -129,8 +133,7 @@ public class QueryManager {
             outputRanking[i][3] = d.get("path");
             outputRanking[i][4] = "" + sd.score + "";
             outputRanking[i][5] = docTitle;
-            i++;
-            //System.out.println(d.get("path"));   
+            i++; 
         }
         
         // ClassicSimilarity
@@ -150,8 +153,7 @@ public class QueryManager {
             outputRanking[i][7] = "" + sd.score + "";
             outputRanking[i][8] = docTitle;
             i++;
-            //System.out.println(d.get("path"));
-              
+            
         }
         
         
@@ -160,7 +162,7 @@ public class QueryManager {
         	System.out.print(outputRanking[j][0] + " ___ " + outputRanking[j][1] + " ___ " + outputRanking[j][2] + " ___ ");
         	System.out.print(outputRanking[j][3] + " ___ " + outputRanking[j][4] + " ___ " + outputRanking[j][5] + " ___ ");
         	System.out.println(outputRanking[j][6] + " ___ " + outputRanking[j][7] + " ___ " + outputRanking[j][8]);
-        
+        	
         }
         
 	}
@@ -206,11 +208,19 @@ public class QueryManager {
         {
             //Create lucene Document
             Document doc = new Document();
-             
+            
+            FieldType termVector = new FieldType(TextField.TYPE_NOT_STORED);
+            termVector.setStoreTermVectors(true);
+            
+            doc.add(new Field("terms", "", termVector));
             doc.add(new StringField("path", file.toString(), Field.Store.YES));
             doc.add(new LongPoint("modified", lastModified));
             doc.add(new TextField("contents", new String(Files.readAllBytes(file)), Store.YES));
-             
+            FieldType myFieldType = new FieldType(TextField.TYPE_STORED);
+            myFieldType.setStoreTermVectors(true);
+
+            doc.add(new Field("c", "", myFieldType));
+            
             //Updates a document by first deleting the document(s)
             //containing <code>term</code> and then adding the new
             //document.  The delete and then add are atomic as seen
